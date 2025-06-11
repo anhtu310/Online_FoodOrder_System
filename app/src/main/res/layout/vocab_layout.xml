@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Ảnh từ vựng -->
+        <ImageView
+            android:id="@+id/vocabImageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="Ảnh minh họa"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Từ tiếng Anh -->
+        <TextView
+            android:id="@+id/vocabTextViewName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/vocabImageView"
+            app:layout_constraintTop_toTopOf="@id/vocabImageView"
+            app:layout_constraintEnd_toStartOf="@id/buttonEditVocab"
+            android:layout_marginStart="12dp" />
+
+        <!-- Phiên âm -->
+        <TextView
+            android:id="@+id/vocabTextViewPronounce"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:textSize="14sp"
+            android:textColor="#666666"
+            app:layout_constraintStart_toStartOf="@id/vocabTextViewName"
+            app:layout_constraintTop_toBottomOf="@id/vocabTextViewName"
+            app:layout_constraintEnd_toEndOf="@id/vocabTextViewName" />
+
+        <!-- Dịch nghĩa -->
+        <TextView
+            android:id="@+id/vocabTextViewMeaning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:textSize="14sp"
+            android:textColor="#444444"
+            app:layout_constraintStart_toStartOf="@id/vocabTextViewName"
+            app:layout_constraintTop_toBottomOf="@id/vocabTextViewPronounce"
+            app:layout_constraintEnd_toEndOf="@id/vocabTextViewName"
+            app:layout_constraintBottom_toBottomOf="@id/vocabImageView" />
+
+        <!-- Nút Sửa -->
+        <Button
+            android:id="@+id/buttonEditVocab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sửa"
+            app:layout_constraintEnd_toStartOf="@id/buttonDeleteVocab"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="4dp" />
+
+        <!-- Nút Xóa -->
+        <Button
+            android:id="@+id/buttonDeleteVocab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xóa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
