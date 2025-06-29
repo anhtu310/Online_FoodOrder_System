@@ -14,22 +14,6 @@
         android:theme="@style/Theme.LearningEnglish"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterActivity"
-            android:exported="true" >
-
-
-            </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".ui.menu.DialogAddMenu"
             android:exported="false" />
         <activity
@@ -41,11 +25,11 @@
         <activity
             android:name=".ui.menu.ManageMenuActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

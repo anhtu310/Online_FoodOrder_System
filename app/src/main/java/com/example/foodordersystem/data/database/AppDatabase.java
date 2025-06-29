@@ -1,5 +1,7 @@
 package com.example.foodordersystem.data.database;
 
+
+
 import android.content.Context;
 
 import androidx.room.Database;
@@ -35,21 +37,22 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract OrderDao orderDao();
     public abstract OrderInfoDao orderInfoDao();
 
-
-    private static volatile AppDatabase INSTANCE;
+    private static AppDatabase instance;
     public static AppDatabase getInstance(Context context) {
-        if (INSTANCE == null) {
+        if (instance == null) {
             synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDatabase.class,
-                            "food_order_database"
-                    ).build();
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                                    context.getApplicationContext(),
+                                    AppDatabase.class,
+                                    "food_order_database"
+                            )
+                            .fallbackToDestructiveMigration() // Xoá DB nếu thay đổi version
+                            .build();
                 }
             }
         }
-        return INSTANCE;
+        return instance;
     }
 }
 
