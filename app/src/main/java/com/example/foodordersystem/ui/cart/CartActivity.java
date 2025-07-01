@@ -57,28 +57,9 @@ public class CartActivity extends AppCompatActivity {
 //            return;
 //        }
 
-        String query =
-            "SELECT * FROM cart_items" +
-            "JOIN menu_items on cart_items.itemId = menu_items.itemId" +
-            "WHERE cart_items.userId = ?";
-        Object[] args = {userId};
-        AppDatabase db = DatabaseClient.getInstance(this).getAppDatabase();
-        try (Cursor cursor = db.query(query, args)) {
-            if (cursor.moveToFirst()) {
-                do {
-                    int cartItemId = cursor.getInt(cursor.getColumnIndexOrThrow("cartItemId"));
-                    int itemId = cursor.getInt(cursor.getColumnIndexOrThrow("itemId"));
-                    int quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"));
-                    String itemName = cursor.getString(cursor.getColumnIndexOrThrow("item_name"));
-                    double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
-                    String imageUrl = cursor.getString(cursor.getColumnIndexOrThrow("image_url"));
-                    items.add(new CartItemBean(cartItemId, userId, itemId, quantity, itemName, price, imageUrl));
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        List<CartItemBean> cartItems = DatabaseClient.getInstance(this).getAppDatabase().cartDao().getCartItemBeanByUser(userId);
+        items.clear();
+        items.addAll(cartItems);
 
         items.add(new CartItemBean(1, 1, 1, 1, "Item 1", 1.0, ""));
         items.add(new CartItemBean(2, 1, 2, 2, "Item 2", 2.0, ""));
