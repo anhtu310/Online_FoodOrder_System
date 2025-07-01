@@ -39,13 +39,17 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CartItemBean item = items.get(position);
         holder.tvItemName.setText(item.itemName);
-        holder.tvPrice.setText(String.format("%.0f", item.price));
+        holder.tvPrice.setText(String.format("%.0f", item.getTotal()));
         holder.etQuantity.setText(String.valueOf(item.quantity));
-        holder.ivItemImage.setImageURI(Uri.parse(item.imageUrl));
+        if (item.imageUrl != null && !item.imageUrl.isEmpty()) {
+            holder.ivItemImage.setImageURI(Uri.parse(item.imageUrl));
+        } else {
+            holder.ivItemImage.setImageResource(R.mipmap.ic_launcher);
+        }
 
         holder.ibIncrease.setOnClickListener(v -> {
             item.quantity++;
-            holder.etQuantity.setText(String.valueOf(item.quantity));
+            this.notifyItemChanged(position);
         });
 
         holder.ibDecrease.setOnClickListener(v -> {
@@ -56,7 +60,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartVi
                 notifyItemRangeChanged(position, getItemCount());
                 return;
             }
-            holder.etQuantity.setText(String.valueOf(item.quantity));
+            this.notifyItemChanged(position);
         });
     }
 
