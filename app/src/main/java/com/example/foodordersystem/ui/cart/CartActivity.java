@@ -20,9 +20,12 @@ import com.example.foodordersystem.data.database.AppDatabase;
 import com.example.foodordersystem.data.database.DatabaseClient;
 import com.example.foodordersystem.data.entity.CartItem;
 import com.example.foodordersystem.data.entity.MenuItem;
+import com.example.foodordersystem.data.entity.User;
+import com.example.foodordersystem.ui.menu.MenuItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -51,20 +54,23 @@ public class CartActivity extends AppCompatActivity {
 
     private void getCartItem() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("userId", -1);
-//        if (userId == -1) {
-//            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        int userId = sharedPreferences.getInt("userId", 1);
+        if (userId == -1) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        List<CartItemBean> cartItems = DatabaseClient.getInstance(this).getAppDatabase().cartDao().getCartItemBeanByUser(userId);
-        items.clear();
-        items.addAll(cartItems);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<CartItemBean> beans = DatabaseClient.getInstance(this)
+                .getAppDatabase()
+                .cartDao()
+                .getCartItemBeanByUser(userId);
 
-        items.add(new CartItemBean(1, 1, 1, 1, "Item 1", 1.0, ""));
-        items.add(new CartItemBean(2, 1, 2, 2, "Item 2", 2.0, ""));
-        items.add(new CartItemBean(3, 1, 3, 3, "Item 3", 3.0, ""));
-        items.add(new CartItemBean(4, 1, 4, 4, "Item 4", 4.0, ""));
-        adapter.notifyDataSetChanged();
+            runOnUiThread(() -> {
+                items.clear();
+                items.addAll(beans);
+                adapter.notifyDataSetChanged();
+            });
+        });
     }
 }
